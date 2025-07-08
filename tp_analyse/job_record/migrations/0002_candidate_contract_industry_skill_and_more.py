@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('job_reccord', '0001_initial'),
+        ('job_record', '0001_initial'),
     ]
 
     operations = [
@@ -83,22 +83,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='jobrecord',
             name='candidate',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='job_reccord.candidate'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='job_record.candidate'),
         ),
         migrations.AddField(
             model_name='jobrecord',
             name='contract',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='job_reccord.contract'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='job_record.contract'),
         ),
         migrations.AddField(
             model_name='jobrecord',
             name='industry',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='job_reccord.industry'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='job_record.industry'),
         ),
         migrations.AddField(
             model_name='jobrecord',
             name='skills',
-            field=models.ManyToManyField(blank=True, to='job_reccord.skill'),
+            field=models.ManyToManyField(blank=True, to='job_record.skill'),
         ),
         migrations.DeleteModel(
             name='CompanySize',
