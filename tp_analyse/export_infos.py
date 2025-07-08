@@ -22,13 +22,13 @@ output_lines.append(f"⚠️ {existing_count} doublons ignorés.\n")
 # 1. Les 5 jobs les mieux payés
 top_jobs = (
     JobRecord.objects
-    .values('job_title')
-    .annotate(avg_salary=Avg('salary_in_usd'))
-    .order_by('-avg_salary')[:5]
+    .order_by('-salary_in_usd')
+    .values('job_title', 'salary_in_usd')[:5]
 )
-output_lines.append("🔥 Top 5 Job Titles les mieux payés (en USD) :")
+output_lines.append("🔥 Top 5 postes avec les salaires individuels les plus élevés (en USD) :")
 for job in top_jobs:
-    output_lines.append(f"- {job['job_title']}: {job['avg_salary']:.2f} USD")
+    output_lines.append(f"- {job['job_title']}: {job['salary_in_usd']:.2f} USD")
+
 
 # 2. Salaire moyen par niveau d'expérience
 exp_avg = (
