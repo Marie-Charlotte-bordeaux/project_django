@@ -63,3 +63,11 @@ with open("resultats_analyse.txt", "w", encoding="utf-8") as f:
     for line in output_lines:
         print(line)
         f.write(line + "\n")
+
+# 4*bonnus. Salaire moyen global
+average_salary = (
+    JobRecord.objects.aggregate(Avg('salary_in_usd'))['salary_in_usd__avg'] or 0
+)
+
+# 4*bonus. Nombre pays couverts
+countries_count = JobRecord.objects.values('company_location').distinct().count()
