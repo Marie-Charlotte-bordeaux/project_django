@@ -72,3 +72,4 @@ with open(csv_path, newline='', encoding='utf-8') as csvfile:
 
 print(f"✅ {created_count} enregistrements créés.")
 print(f"⚠️ {existing_count} doublons ignorés.")
+
