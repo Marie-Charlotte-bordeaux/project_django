@@ -39,19 +39,17 @@
   {% endif %}
 </form>
 
-{% if min_rating %}
-<p class="text-sm text-green-400">
-  ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
-</p>
-{% endif %}
-
+<!-- ******* -->
 <p>Note min: {{ min_rating }}</p>
 <p>{{ feedbacks|length }} feedback(s) found.</p>
 {% if min_rating %}
 <p class="text-sm text-green-400">
   ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
 </p>
-{% endif %} {% for feedback in feedbacks %}
+{% endif %}
+<!-- *********** -->
+<!-- feedback card -->
+{% for feedback in feedbacks %}
 <div class="feedback bg-gray-800 p-4 rounded shadow mb-4">
   <p class="text-white font-semibold">{{ feedback.author_name.name }}</p>
   <p class="text-yellow-400">⭐ Rating: {{ feedback.rating }}/5</p>

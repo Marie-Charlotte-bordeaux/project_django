@@ -16,7 +16,7 @@ def feedback_list(request, job_id):
     if min_rating:
         try:
             filter_value  = int(min_rating)
-            feedbacks = feedbacks.filter(rating__gte=filter_value)
+            feedbacks = feedbacks.filter(rating=filter_value)
         except ValueError:
             filter_value = None 
 
