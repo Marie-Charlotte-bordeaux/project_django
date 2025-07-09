@@ -51,7 +51,7 @@ class JobRecordSerializerTest(TestCase):
         job_data = {
             'work_year': 2025,
             'experience_level': 'SE',
-            'employment_type': contract.id,
+            'employment_type': contract.id, # type: ignore
             'job_title': "Développeur Python",
             'salary': "50000.00",
             'salary_currency': "EUR",
@@ -60,11 +60,11 @@ class JobRecordSerializerTest(TestCase):
             'remote_ratio': 50,
             'company_location': "France",
             'company_size': "M",
-            'industry': industry.id,
-            'Contract': contract.id,
-            'candidate': candidate.id,
+            'industry': industry.id, # type: ignore
+            'Contract': contract.id, # type: ignore
+            'candidate': candidate.id, # type: ignore
             'skills': [],
-            'category': category.id,
+            'category': category.id, # type: ignore
         }
 
         serializer = JobRecordSerializer(data=job_data)
