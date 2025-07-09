@@ -2,7 +2,7 @@
 # pour quelles soient exploitable en api
 from rest_framework import serializers
 from .models import Feedback
-from job_record.Serializer import JobRecordSerializer, CandidateSerializer
+from project_django.tp_analyse.job_record.serializers import JobRecordSerializer, CandidateSerializer
 
 class FeedbackSerializer(serializers.ModelSerializer):
   # ForeignKey affichés en détail (read_only)
