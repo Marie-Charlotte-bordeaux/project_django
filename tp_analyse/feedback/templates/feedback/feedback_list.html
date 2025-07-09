@@ -54,6 +54,11 @@
     <h2 class="text-2xl font-bold mb-4 text-white">
       Feedbacks for "{{ job.job_title }}"
     </h2>
+    <a
+      href="{% url 'add-feedback' job.id %}"
+      class="text-blue-400 hover:underline"
+      >➕ Ajouter un feedback</a
+    >
 
     <form method="get" class="mb-4 flex items-center">
       <label for="min_rating" class="mr-2 text-white">Minimum Rating:</label>
