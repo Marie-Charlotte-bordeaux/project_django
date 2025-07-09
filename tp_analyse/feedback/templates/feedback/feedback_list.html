@@ -1,115 +1,65 @@
-<!-- templates/feedback/feedback_list.html -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Feedbacks for {{ job.job_title }}</title>
-    <style>
-      body {
-        background-color: #121212;
-        color: #e0e0e0;
-        font-family: Arial, sans-serif;
-        padding: 2rem;
-      }
-      h1 {
-        color: #bb86fc;
-      }
-      .feedback {
-        background-color: #1e1e1e;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        border-left: 4px solid #03dac6;
-      }
-      .rating {
-        color: #ffd700;
-      }
-      form {
-        margin-bottom: 2rem;
-      }
-      input[type="number"] {
-        background-color: #2a2a2a;
-        color: white;
-        border: 1px solid #555;
-        padding: 0.5rem;
-        border-radius: 4px;
-      }
-      button {
-        background-color: #03dac6;
-        border: none;
-        padding: 0.5rem 1rem;
-        margin-left: 0.5rem;
-        color: #000;
-        font-weight: bold;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #028f8f;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Feedbacks for "{{ job.job_title }}"</h1>
-    <h2 class="text-2xl font-bold mb-4 text-white">
-      Feedbacks for "{{ job.job_title }}"
-    </h2>
-    <a
-      href="{% url 'add-feedback' job.id %}"
-      class="text-blue-400 hover:underline"
-      >➕ Ajouter un feedback</a
-    >
+{% extends 'base.html' %} {% block title %}Feedbacks for "{{ job.job_title
+}}"{%endblock %} {% block content %}
+<h2 class="text-2xl font-bold mb-4 text-white">
+  Feedbacks for "{{ job.job_title }}"
+</h2>
+<a href="{% url 'add-feedback' job.id %}" class="text-blue-400 hover:underline"
+  >➕ Ajouter un feedback</a
+>
+<a
+  href="{% url 'job-list' %}"
+  class="text-blue-400 hover:underline mb-4 inline-block"
+  >⬅ Retour aux jobs</a
+>
 
-    <form method="get" class="mb-4 flex items-center">
-      <label for="min_rating" class="mr-2 text-white">Minimum Rating:</label>
-      <input
-        type="number"
-        name="min_rating"
-        id="min_rating"
-        min="1"
-        max="5"
-        value="{{ min_rating }}"
-        class="w-20 px-2 py-1 rounded bg-gray-700 text-white border border-gray-500"
-      />
-      <button
-        type="submit"
-        class="ml-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        Filter
-      </button>
+<form method="get" class="mb-4 flex items-center">
+  <label for="min_rating" class="mr-2 text-white">Minimum Rating:</label>
+  <input
+    type="number"
+    name="min_rating"
+    id="min_rating"
+    min="1"
+    max="5"
+    value="{{ min_rating }}"
+    class="w-20 px-2 py-1 rounded bg-gray-700 text-white border border-gray-500"
+  />
+  <button
+    type="submit"
+    class="ml-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+  >
+    Filter
+  </button>
 
-      {% if min_rating %}
-      <a
-        href="{% url 'feedback-list' job.id %}"
-        class="ml-2 px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-500"
-        >❌ Réinitialiser</a
-      >
-      {% endif %}
-    </form>
+  {% if min_rating %}
+  <a
+    href="{% url 'feedback-list' job.id %}"
+    class="ml-2 px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-500"
+    >❌ Réinitialiser</a
+  >
+  {% endif %}
+</form>
 
-    {% if min_rating %}
-    <p class="text-sm text-green-400">
-      ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
-    </p>
-    {% endif %}
+{% if min_rating %}
+<p class="text-sm text-green-400">
+  ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
+</p>
+{% endif %}
 
-    <p>Note min: {{ min_rating }}</p>
-    <p>{{ feedbacks|length }} feedback(s) found.</p>
-    {% if min_rating %}
-    <p class="text-sm text-green-400">
-      ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
-    </p>
-    {% endif %} {% for feedback in feedbacks %}
-    <div class="feedback bg-gray-800 p-4 rounded shadow mb-4">
-      <p class="text-white font-semibold">{{ feedback.author_name.name }}</p>
-      <p class="text-yellow-400">⭐ Rating: {{ feedback.rating }}/5</p>
-      <p class="text-gray-300 italic">{{ feedback.comment }}</p>
-      <small class="text-gray-500"
-        >{{ feedback.created_at|date:"Y-m-d H:i" }}</small
-      >
-    </div>
-    {% empty %}
-    <p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
-    {% endfor %}
-  </body>
-</html>
+<p>Note min: {{ min_rating }}</p>
+<p>{{ feedbacks|length }} feedback(s) found.</p>
+{% if min_rating %}
+<p class="text-sm text-green-400">
+  ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
+</p>
+{% endif %} {% for feedback in feedbacks %}
+<div class="feedback bg-gray-800 p-4 rounded shadow mb-4">
+  <p class="text-white font-semibold">{{ feedback.author_name.name }}</p>
+  <p class="text-yellow-400">⭐ Rating: {{ feedback.rating }}/5</p>
+  <p class="text-gray-300 italic">{{ feedback.comment }}</p>
+  <small class="text-gray-500"
+    >{{ feedback.created_at|date:"Y-m-d H:i" }}</small
+  >
+</div>
+{% empty %}
+<p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
+{% endfor %} {% endblock %}

@@ -3,6 +3,11 @@
   <h2 class="text-xl font-bold mb-4">
     Ajouter un feedback pour "{{ job.job_title }}"
   </h2>
+  <a
+    href="{% url 'job-list' %}"
+    class="text-blue-400 hover:underline mb-4 inline-block"
+    >⬅ Retour aux jobs</a
+  >
 
   {% if average_rating %}
   <p class="text-green-400 mb-4">

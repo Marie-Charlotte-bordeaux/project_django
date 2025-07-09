@@ -9,9 +9,11 @@ def jobs_record(request):
     total_jobs = JobRecord.objects.count()
     average_salary = JobRecord.objects.aggregate(Avg('salary_in_usd'))['salary_in_usd__avg']
     countries_count = JobRecord.objects.values('company_location').distinct().count()
-
+    jobs = JobRecord.objects.all()
+    
     return render(request, 'jobs/jobs.html', {
         'total_jobs': total_jobs,
         'average_salary': round(average_salary or 0, 2),
-        'countries_count': countries_count
+        'countries_count': countries_count,
+        'jobs': jobs
     })
