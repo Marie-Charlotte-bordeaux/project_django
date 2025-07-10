@@ -1,0 +1,46 @@
+{% load tailwind_tags %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="fr" class="bg-gray-950 text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Mon App Django{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind CSS -->
+    {% tailwind_css %}
+
+    <!-- Favicon et autres -->
+    <link rel="icon" href="https://emojiapi.dev/api/v1/sparkles/64.png" />
+
+    <!-- Typo girly optionnelle (Google Fonts) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen bg-gray-950 text-gray-200 font-sans flex flex-col">
+    <!-- HEADER -->
+    <header class="border-b border-gray-800 p-6 text-center">
+      <h1 class="text-4xl font-pacifico text-pink-400">
+        ✨ Mon Projet Django ✨
+      </h1>
+      <p class="text-gray-400">Avec Tailwind, tout est plus joli ! 💖</p>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 container mx-auto p-6">
+      {% block content %}
+      <!-- Le contenu spécifique de chaque page -->
+      {% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="border-t border-gray-800 text-center p-4 text-gray-500 text-sm"
+    >
+      © 2025 – Mon App Django. Fait avec ❤️ et Tailwind.
+    </footer>
+  </body>
+</html>

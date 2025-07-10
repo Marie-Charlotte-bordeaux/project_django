@@ -16,9 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('job_record.urls')),
-    path('feedback/', include('feedback.urls')),
+    
+    # FRONT
+    path('', include('job_record.urls')),       # Front jobs
+    path('feedback/', include('feedback.urls')), # Front feedback
 
+    # APIs REST  
+    path('api/', include('job_record.api_urls')),      # API jobs
+    path('api/', include('feedback.api_urls')),   # API feedbacks
 ]

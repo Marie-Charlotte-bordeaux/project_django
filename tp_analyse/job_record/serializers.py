@@ -25,12 +25,7 @@ class IndustrySerializer(serializers.ModelSerializer):
 
 class CandidateSerializer(serializers.ModelSerializer):
     industry = IndustrySerializer(read_only=True)
-    industry_id = serializers.PrimaryKeyRelatedField(
-        queryset=Industry.objects.all(),
-        source='industry',
-        write_only=True,
-        required=False
-    )
+
     class Meta:
       model = Candidate
       fields= ['id', 'name', 'email', 'location', 'industry', 'created_at', 'updated_at']

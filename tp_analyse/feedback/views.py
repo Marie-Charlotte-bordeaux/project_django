@@ -1,10 +1,23 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
+
 from .models import Feedback
 from job_record.models import JobRecord
 from .forms import FeedbackForm
 from django.db.models import Avg
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+from .serializers import FeedbackSerializer
 
+
+
+# PoUR API REST
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()    
+    permission_classes = [IsAuthenticatedOrReadOnly]   
+    serializer_class = FeedbackSerializer
+    
+    
 def feedback_list(request, job_id):
     job = get_object_or_404(JobRecord, id=job_id)
 

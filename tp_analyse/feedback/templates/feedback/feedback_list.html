@@ -1,63 +1,69 @@
-{% extends 'base.html' %} {% block title %}Feedbacks for "{{ job.job_title
-}}"{%endblock %} {% block content %}
-<h2 class="text-2xl font-bold mb-4 text-white">
-  Feedbacks for "{{ job.job_title }}"
-</h2>
-<a href="{% url 'add-feedback' job.id %}" class="text-blue-400 hover:underline"
-  >➕ Ajouter un feedback</a
->
-<a
-  href="{% url 'job-list' %}"
-  class="text-blue-400 hover:underline mb-4 inline-block"
-  >⬅ Retour aux jobs</a
->
+{% extends 'base.html' %} {% block title %}💬 Feedbacks pour « {{ job.job_title
+}} »{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+  <h2 class="text-3xl font-bold text-pink-400">
+    💬 Feedbacks pour « {{ job.job_title }} »
+  </h2>
 
-<form method="get" class="mb-4 flex items-center">
-  <label for="min_rating" class="mr-2 text-white">Minimum Rating:</label>
-  <input
-    type="number"
-    name="min_rating"
-    id="min_rating"
-    min="1"
-    max="5"
-    value="{{ min_rating }}"
-    class="w-20 px-2 py-1 rounded bg-gray-700 text-white border border-gray-500"
-  />
-  <button
-    type="submit"
-    class="ml-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-  >
-    Filter
-  </button>
+  <div class="flex flex-wrap gap-4">
+    <a
+      href="{% url 'add-feedback' job.id %}"
+      class="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded text-white shadow"
+    >
+      ➕ Ajouter un feedback
+    </a>
+    <a
+      href="{% url 'job-list' %}"
+      class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-white shadow"
+    >
+      ⬅️ Retour aux jobs
+    </a>
+  </div>
+
+  <!-- Filtre -->
+  <form method="get" class="flex flex-wrap items-center gap-2">
+    <label for="min_rating" class="text-pink-300">Note exacte :</label>
+    <input
+      type="number"
+      name="min_rating"
+      id="min_rating"
+      min="1"
+      max="5"
+      value="{{ min_rating }}"
+      class="w-24 px-2 py-1 rounded bg-gray-800 border border-gray-600 text-white"
+    />
+    <button
+      type="submit"
+      class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded"
+    >
+      Filtrer
+    </button>
+    {% if min_rating %}
+    <a
+      href="{% url 'feedback-list' job.id %}"
+      class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded"
+    >
+      ❌ Réinitialiser
+    </a>
+    {% endif %}
+  </form>
 
   {% if min_rating %}
-  <a
-    href="{% url 'feedback-list' job.id %}"
-    class="ml-2 px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-500"
-    >❌ Réinitialiser</a
-  >
+  <p class="text-sm text-purple-300">Filtre actif : Note = {{ min_rating }}</p>
   {% endif %}
-</form>
 
-<!-- ******* -->
-<p>Note min: {{ min_rating }}</p>
-<p>{{ feedbacks|length }} feedback(s) found.</p>
-{% if min_rating %}
-<p class="text-sm text-green-400">
-  ➤ Affichage des feedbacks avec une note ≥ {{ min_rating }}
-</p>
-{% endif %}
-<!-- *********** -->
-<!-- feedback card -->
-{% for feedback in feedbacks %}
-<div class="feedback bg-gray-800 p-4 rounded shadow mb-4">
-  <p class="text-white font-semibold">{{ feedback.author_name.name }}</p>
-  <p class="text-yellow-400">⭐ Rating: {{ feedback.rating }}/5</p>
-  <p class="text-gray-300 italic">{{ feedback.comment }}</p>
-  <small class="text-gray-500"
-    >{{ feedback.created_at|date:"Y-m-d H:i" }}</small
-  >
+  <!-- Feedbacks -->
+  {% for feedback in feedbacks %}
+  <div class="bg-gray-800 p-4 rounded-lg shadow border-l-4 border-pink-400">
+    <p class="font-semibold text-pink-200">{{ feedback.author_name.name }}</p>
+    <p class="text-yellow-400">⭐ Note : {{ feedback.rating }}/5</p>
+    <p class="text-gray-300 italic">{{ feedback.comment }}</p>
+    <small class="text-gray-500"
+      >{{ feedback.created_at|date:"Y-m-d H:i" }}</small
+    >
+  </div>
+  {% empty %}
+  <p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
+  {% endfor %}
 </div>
-{% empty %}
-<p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
-{% endfor %} {% endblock %}
+{% endblock %}

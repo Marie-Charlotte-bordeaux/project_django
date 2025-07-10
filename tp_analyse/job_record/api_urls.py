@@ -4,8 +4,9 @@ from .views import job_detail, jobs_record
 from rest_framework.routers import DefaultRouter
 from .views import JobRecordViewSet
 
+router = DefaultRouter()
+router.register(r'jobrecord', JobRecordViewSet, basename='jobrecord')
 
 urlpatterns = [
-    path('',jobs_record, name='home'),
-    path('<int:job_id>/', job_detail, name='job-detail'),  # détail job front
+    path('', include(router.urls)), 
 ]
