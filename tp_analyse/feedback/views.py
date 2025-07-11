@@ -3,6 +3,7 @@ from django.db.models import Avg
 from django.db.models import QuerySet
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+from django.urls import reverse
 
 from .forms import FeedbackForm
 from .serializers import FeedbackSerializer
@@ -44,7 +45,7 @@ def add_feedback(request, job_id):
             feedback = form.save(commit=False)
             feedback.job = job
             feedback.save()
-            return redirect('feedback-list', job_id=job.id) # type: ignore
+            return redirect(reverse('feedback-list-front', kwargs={'job_id': job.id}))    
     else:
         form = FeedbackForm()
 

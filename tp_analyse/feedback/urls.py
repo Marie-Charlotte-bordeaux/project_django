@@ -1,14 +1,10 @@
 from rest_framework.routers import DefaultRouter
 from django import views
-from django.urls import include, path
+from django.urls import path
 
 from . import views
-from .views import feedback_list, FeedbackViewSet
+from .views import feedback_list
 from job_record import views as job_views
-
-
-router = DefaultRouter()
-router.register(r'feedbacks', FeedbackViewSet, basename='feedback')
 
 
 urlpatterns = [
@@ -17,4 +13,3 @@ urlpatterns = [
     path('', job_views.jobs_record, name='job-list'),
     
 ]
-urlpatterns += router.urls
