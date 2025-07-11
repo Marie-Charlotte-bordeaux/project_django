@@ -1,23 +1,15 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import JsonResponse
-
-from .models import Feedback
-from job_record.models import JobRecord
-from .forms import FeedbackForm
 from django.db.models import Avg
+from django.db.models import QuerySet
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+
+from .forms import FeedbackForm
 from .serializers import FeedbackSerializer
+from .models import Feedback
+from job_record.models import JobRecord
 
 
-
-# PoUR API REST
-class FeedbackViewSet(viewsets.ModelViewSet):
-    queryset = Feedback.objects.all()    
-    permission_classes = [IsAuthenticatedOrReadOnly]   
-    serializer_class = FeedbackSerializer
-    
-    
 def feedback_list(request, job_id):
     job = get_object_or_404(JobRecord, id=job_id)
 
@@ -62,3 +54,15 @@ def add_feedback(request, job_id):
         'average_rating': average_rating,
         'feedbacks': feedbacks,
     })
+
+# PoUR API REST
+class FeedbackViewSet(viewsets.ModelViewSet):
+    serializer_class = FeedbackSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self) -> QuerySet:
+        queryset = Feedback.objects.all()
+        job_id = self.request.query_params.get('job')
+        if job_id:
+            queryset = queryset.filter(job_id=job_id)
+        return queryset

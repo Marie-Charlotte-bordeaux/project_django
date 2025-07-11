@@ -1,7 +1,7 @@
 # Permet de traduire nos données en format json
 # pour quelles soient exploitable en api
 from rest_framework import serializers
-from .models import Category, Contract, Skill, Industry, Candidate, JobRecord
+from job_record.models import Category, Contract, Skill, Industry, Candidate, JobRecord
 
 class CategorySerializer(serializers.ModelSerializer):
   class Meta:

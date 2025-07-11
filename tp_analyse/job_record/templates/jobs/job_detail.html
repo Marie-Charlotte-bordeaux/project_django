@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% load static %}
+<script src="{% static 'js/feedback.js' %}"></script>
+
+<!-- TITLE -->
+{% block title %}📊 {{job_detail}}{% endblock %}
+<!-- BODY -->
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+  <!-- Titre -->
+  <h1 class="text-3xl font-bold text-pink-400 flex items-center gap-2">
+    📈 Dashboard d'un 'Emploi
+  </h1>
+</div>
+{% endblock %}

@@ -1,4 +1,9 @@
-{% extends 'base.html' %} {% block title %}📊 Dashboard des Jobs{% endblock %}
+{% extends 'base.html' %} {% load static %}
+<script src="{% static 'js/feedback.js' %}"></script>
+
+<!-- TITLE -->
+{% block title %}📊 Dashboard des Jobs{% endblock %}
+<!-- BODY -->
 {% block content %}
 <div class="max-w-4xl mx-auto space-y-8">
   <!-- Titre -->

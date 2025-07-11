@@ -1,5 +1,10 @@
-{% extends 'base.html' %} {% block title %}💬 Feedbacks pour « {{ job.job_title
-}} »{% endblock %} {% block content %}
+{% extends 'base.html' %} {% load static %}
+<script src="{% static 'js/feedback.js' %}"></script>
+
+<!-- TITLE -->
+{% block title %}💬 Feedbacks pour « {{ job.job_title}} » {% endblock %}
+<!-- BODY -->
+{% block content %}
 <div class="max-w-4xl mx-auto space-y-8">
   <h2 class="text-3xl font-bold text-pink-400">
     💬 Feedbacks pour « {{ job.job_title }} »
@@ -53,7 +58,8 @@
   {% endif %}
 
   <!-- Feedbacks -->
-  {% for feedback in feedbacks %}
+  <div id="feedback-list"></div>
+  <!-- {% for feedback in feedbacks %}
   <div class="bg-gray-800 p-4 rounded-lg shadow border-l-4 border-pink-400">
     <p class="font-semibold text-pink-200">{{ feedback.author_name.name }}</p>
     <p class="text-yellow-400">⭐ Note : {{ feedback.rating }}/5</p>
@@ -62,8 +68,14 @@
       >{{ feedback.created_at|date:"Y-m-d H:i" }}</small
     >
   </div>
-  {% empty %}
-  <p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
-  {% endfor %}
+  {% empty %} -->
+  <!-- <p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
+  {% endfor %} -->
 </div>
+{% block extra_js %} {% load static %}
+<script src="{% static 'js/feedback.js' %}"></script>
+<script>
+  window.JOB_ID = "{{ job.id }}";
+  window.API_TOKEN = "{{ user.auth_token.key|default:'' }}";
+</script>
 {% endblock %}

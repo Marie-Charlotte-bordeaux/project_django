@@ -26,6 +26,6 @@ urlpatterns = [
     path('feedback/', include('feedback.urls')), # Front feedback
 
     # APIs REST  
-    path('api/', include('job_record.api_urls')),      # API jobs
-    path('api/', include('feedback.api_urls')),   # API feedbacks
+    path('api/', include('feedback.urls')),      # API feedbacks
+    path('api/', include('job_record.urls')),      # API jobs
 ]

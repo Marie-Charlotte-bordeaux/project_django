@@ -3,7 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 from rest_framework.test import APITestCase
 from job_record.models import *
-from job_record.serializers import JobRecordSerializer
+from api.serializers.jobrecord_serializers import JobRecordSerializer
 
 class JobRecordSerializerTest1(APITestCase):
     def setUp(self):

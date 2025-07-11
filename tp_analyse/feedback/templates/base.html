@@ -4,8 +4,35 @@
     <meta charset="UTF-8" />
     <title>{% block title %}Mon App Django{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- TAILWIND STYLE -->
     {% tailwind_css %}
     <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet" />
+
+    {% if user.is_authenticated %}
+    <!-- Ton token pour le JS -->
+    <meta name="api-token" content="{{ user.auth_token.key }}" />
+    <script>
+      window.API_TOKEN = "{{ user.auth_token.key }}";
+    </script>
+    {% endif %}
+
+    <!-- Exemple de script pour la page jobs -->
+    <script>
+      fetch("/api/jobrecords/", {
+        headers: {
+          Authorization: "Token " + window.API_TOKEN,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          // Exemple : remplir les stats si tu as ces éléments dans ton HTML
+          if (document.querySelector("#total_jobs")) {
+            document.querySelector("#total_jobs").textContent =
+              data.total_jobs || data.length;
+          }
+        });
+    </script>
   </head>
   <body class="min-h-screen flex flex-col font-sans px-4 py-6">
     <!-- ✅ Header -->
@@ -14,12 +41,8 @@
     </header>
 
     <!-- ✅ Contenu principal -->
-    <main class="flex-grow space-y-4">
-      {% block content %}
-      <!-- Contenu dynamique ici -->
-      {% endblock %}
-    </main>
-
+    <main class="flex-grow space-y-4">{% block content %} {% endblock %}</main>
+    {% block extra_js %}{% endblock %}
     <!-- ✅ Footer -->
     <footer
       class="mt-12 pt-4 border-t border-gray-700 text-gray-500 text-center text-sm"

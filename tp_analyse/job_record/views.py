@@ -1,11 +1,12 @@
+from rest_framework import viewsets, filters
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.db.models import Avg, Count
 
 from .serializers import JobRecordSerializer
 from .models import JobRecord
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+
 
 # Create your views here.
 def jobs_record(request):
@@ -25,10 +26,20 @@ def jobs_record(request):
 
 def job_detail(request, job_id):
     job = get_object_or_404(JobRecord, pk=job_id)
-    return render(request, 'job_record/job_detail.html', {'job': job})
+    return render(request, 'job_record/templates/jobs/job_detail.html', {'job': job})
+
+
+
 
 # une vue API REST (JobRecordViewSet) pour tes requêtes JSON.
 class JobRecordViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]   
     queryset = JobRecord.objects.all()
     serializer_class = JobRecordSerializer
+    permission_classes = [IsAuthenticated]   
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    
+    # QUERY FILTRE SEARCH ..
+    search_fields = ['job_title', 'employee_residence', 'company_size', 'experience_level'] #recherche
+    ordering_fields = ['salary_in_usd', 'ordering'] #filtrer les données par ordre du salaire
+    ordering_fields = ['salary_in_usd', 'created_at'] # champs filtrables précisément
+    

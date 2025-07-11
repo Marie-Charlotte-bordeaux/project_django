@@ -37,28 +37,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_browser_reload', 
+    'rest_framework',
+    'rest_framework.authtoken',
     'tailwind',
     'theme',
-    'django_browser_reload', 
     'job_record',
     'feedback',
-    'rest_framework'
 ]
 
 STATICFILES_DIRS = [
     BASE_DIR / "theme" / "static",
 ]
-
+STATIC_URL = '/static/'
 TAILWIND_APP_NAME = 'theme'
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-    'rest_framework.permissions.IsAuthenticated',
-    ]
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',  # pour front HTML
+        'rest_framework.authentication.TokenAuthentication',    # pour API token
+    ],
 }
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

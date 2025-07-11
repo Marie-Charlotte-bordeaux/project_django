@@ -3,10 +3,7 @@
 from rest_framework import serializers
 
 from job_record.models import Candidate, JobRecord
-from .models import Feedback
-
-from job_record.serializers import JobRecordSerializer,CandidateSerializer
-
+from feedback.models import Feedback
 
 class FeedbackSerializer(serializers.ModelSerializer):
   # ForeignKey affichés en détail (read_only)
