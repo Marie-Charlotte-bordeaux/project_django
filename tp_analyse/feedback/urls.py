@@ -12,9 +12,9 @@ router.register(r'feedbacks', FeedbackViewSet, basename='feedback')
 
 
 urlpatterns = [
-    path('job/<str:job_title>/', feedback_list, name='feedback-list'),
-    path('job/<str:job_title>/add/', views.add_feedback, name='add-feedback'),
-    path('jobs/', job_views.jobs_record, name='job-list'),
+    path('job/<int:job_id>/', feedback_list, name='feedback-list-front'),
+    path('job/<int:job_id>/add/', views.add_feedback, name='add-feedback'),
+    path('', job_views.jobs_record, name='job-list'),
     
-    path('', include(router.urls)), 
 ]
+urlpatterns += router.urls

@@ -1,5 +1,4 @@
 {% extends 'base.html' %} {% load static %}
-<script src="{% static 'js/feedback.js' %}"></script>
 
 <!-- TITLE -->
 {% block title %}📊 Dashboard des Jobs{% endblock %}
@@ -63,12 +62,11 @@
             {% endif %}
           </div>
           <a
-            href="{% url 'feedback-list' job.id %}"
+            href="{% url 'feedback-list-front' job.id %}"
             class="text-pink-400 hover:underline text-sm"
           >
             ➡️ Voir feedbacks
           </a>
-          <a href="{% url 'job-detail' job.id %}">Voir détails</a>
         </div>
       </li>
       {% empty %}

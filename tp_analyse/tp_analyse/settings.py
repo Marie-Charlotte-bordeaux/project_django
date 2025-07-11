@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'tailwind',
+    "widget_tweaks",
     'theme',
     'job_record',
     'feedback',
