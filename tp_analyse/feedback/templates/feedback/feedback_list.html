@@ -1,15 +1,17 @@
 {% extends 'base.html' %} {% load static %}
-<script src="{% static 'js/feedback.js' %}"></script>
 
 <!-- TITLE -->
-{% block title %}💬 Feedbacks pour « {{ job.job_title}} » {% endblock %}
+{% block title %}💬 Feedbacks pour « {{ job.job_title }} »{% endblock %}
+
 <!-- BODY -->
 {% block content %}
 <div class="max-w-4xl mx-auto space-y-8">
+  <!-- Titre -->
   <h2 class="text-3xl font-bold text-pink-400">
     💬 Feedbacks pour « {{ job.job_title }} »
   </h2>
 
+  <!-- Boutons -->
   <div class="flex flex-wrap gap-4">
     <a
       href="{% url 'add-feedback' job.id %}"
@@ -25,7 +27,7 @@
     </a>
   </div>
 
-  <!-- Filtre -->
+  <!-- Formulaire de filtre -->
   <form method="get" class="flex flex-wrap items-center gap-2">
     <label for="min_rating" class="text-pink-300">Note exacte :</label>
     <input
@@ -34,7 +36,7 @@
       id="min_rating"
       min="1"
       max="5"
-      value="{{ min_rating }}"
+      value="{{ request.GET.min_rating|default_if_none:'' }}"
       class="w-24 px-2 py-1 rounded bg-gray-800 border border-gray-600 text-white"
     />
     <button
@@ -43,7 +45,7 @@
     >
       Filtrer
     </button>
-    {% if min_rating %}
+    {% if request.GET.min_rating %}
     <a
       href="{% url 'feedback-list-front' job.id %}"
       class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded"
@@ -53,35 +55,25 @@
     {% endif %}
   </form>
 
-  {% if min_rating %}
-  <p class="text-sm text-purple-300">Filtre actif : Note = {{ min_rating }}</p>
+  {% if request.GET.min_rating %}
+  <p class="text-sm text-purple-300">
+    Filtre actif : Note = {{ request.GET.min_rating }}
+  </p>
   {% endif %}
 
-  <!-- Feedbacks -->
-  {% for feedback in feedbacks %}
-  <div
-    id="feedback-list"
-    class="bg-gray-800 p-4 rounded-lg shadow border-l-4 border-pink-400"
-  >
-    <p class="font-semibold text-pink-200">{{ feedback.author_name.name }}</p>
-    <p class="text-yellow-400">⭐ Note : {{ feedback.rating }}/5</p>
-    <p class="text-gray-300 italic">{{ feedback.comment }}</p>
-    <small class="text-gray-500"
-      >{{ feedback.created_at|date:"Y-m-d H:i" }}</small
-    >
+  <!-- Conteneur pour l'injection dynamique des feedbacks -->
+  <div id="feedback-list" class="space-y-4">
+    <!-- Le JS injecte les feedbacks ici -->
   </div>
-  {% empty %}
-  <p class="text-red-400">Aucun feedback trouvé pour ce filtre.</p>
-  {% endfor %}
 </div>
-{% endblock %}
-<!-- FIN de la page  -->
 
-<!-- SCRIPT -->
-{% block extra_js %} {% load static %}
-<script>
-  fetch("/api/feedbacks/?job=<id>");
+<!-- Données pour le script -->
+<script type="text/javascript">
+  console.log("🎉 feedback.js chargé !");
   window.JOB_ID = "{{ job.id }}";
   window.API_TOKEN = "{{ user.auth_token.key|default:'' }}";
 </script>
-{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'js/feedback.js' %}"></script>
+{% endblock %} {% endblock %}

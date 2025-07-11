@@ -1,34 +1,39 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load widget_tweaks %}
-
-<script src="{% static 'js/feedback.js' %}"></script>
+{% extends 'base.html' %} {% load static %} {% load widget_tweaks %}
 
 {% block title %}✍️ Ajouter un Feedback{% endblock %}
-
+<!-- BODY -->
 {% block content %}
-<div class="max-w-xl mx-auto bg-gray-900 text-white p-8 rounded-lg shadow-lg border border-pink-500">
+<div
+  class="max-w-xl mx-auto bg-gray-900 text-white p-8 rounded-lg shadow-lg border border-pink-500"
+>
   <!-- Titre -->
   <h2 class="text-3xl font-bold mb-4 text-pink-400">
     ✍️ Ajouter un feedback pour « {{ job.job_title }} »
   </h2>
 
   <!-- Lien retour -->
-  <a href="{% url 'job-list' %}" class="text-purple-400 hover:underline inline-block mb-4">
+  <a
+    href="{% url 'job-list' %}"
+    class="text-purple-400 hover:underline inline-block mb-4"
+  >
     ⬅️ Retour aux jobs
   </a>
 
   <!-- Note moyenne -->
   {% if average_rating %}
-    <p class="text-yellow-300 mb-4">
-      ⭐ Note moyenne actuelle : {{ average_rating|floatformat:1 }}/5
-    </p>
+  <p class="text-yellow-300 mb-4">
+    ⭐ Note moyenne actuelle : {{ average_rating|floatformat:1 }}/5
+  </p>
   {% else %}
-    <p class="text-gray-400 mb-4">Aucune note encore.</p>
+  <p class="text-gray-400 mb-4">Aucune note encore.</p>
   {% endif %}
 
   <!-- Formulaire -->
-  <form method="post" action="{% url 'add-feedback' job.id %}" class="space-y-5">
+  <form
+    method="post"
+    action="{% url 'add-feedback' job.id %}"
+    class="space-y-5"
+  >
     {% csrf_token %}
 
     <!-- Nom -->
@@ -57,9 +62,7 @@
 
     <!-- Erreurs -->
     {% if form.errors %}
-      <div class="text-red-400 text-sm">
-        {{ form.errors }}
-      </div>
+    <div class="text-red-400 text-sm">{{ form.errors }}</div>
     {% endif %}
 
     <!-- Bouton envoyer -->

@@ -63,6 +63,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',  # pour front HTML
         'rest_framework.authentication.TokenAuthentication',    # pour API token
     ],
+        'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ]
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

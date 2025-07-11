@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg
 from django.db.models import QuerySet
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from django.urls import reverse
 
@@ -45,7 +46,7 @@ def add_feedback(request, job_id):
             feedback = form.save(commit=False)
             feedback.job = job
             feedback.save()
-            return redirect(reverse('feedback-list-front', kwargs={'job_id': job.id}))    
+            return redirect(reverse('feedback-list-front', kwargs={'job_id': job.id}))     # type: ignore
     else:
         form = FeedbackForm()
 
@@ -58,12 +59,13 @@ def add_feedback(request, job_id):
 
 # PoUR API REST
 class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_queryset(self) -> QuerySet:
-        queryset = Feedback.objects.all()
-        job_id = self.request.query_params.get('job')
-        if job_id:
-            queryset = queryset.filter(job_id=job_id)
-        return queryset
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    # Recherche textuelle
+    search_fields = ['comment', 'author_name']
+    # Tri
+    ordering_fields = ['created_at', 'rating']
+    # Filtre exact
+    filterset_fields = ['rating', 'job']
